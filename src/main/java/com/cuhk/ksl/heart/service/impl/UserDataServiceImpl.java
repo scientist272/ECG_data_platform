@@ -1,0 +1,41 @@
+package com.cuhk.ksl.heart.service.impl;
+
+import com.alibaba.fastjson.JSON;
+import com.cuhk.ksl.heart.constant.CommonConstant;
+import com.cuhk.ksl.heart.dao.UserDataRepo;
+import com.cuhk.ksl.heart.dao.UserRepo;
+import com.cuhk.ksl.heart.entity.User;
+import com.cuhk.ksl.heart.entity.UserData;
+import com.cuhk.ksl.heart.service.UserDataService;
+import com.cuhk.ksl.heart.vo.KafkaProducerMsg;
+import com.cuhk.ksl.heart.vo.Msg;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class UserDataServiceImpl implements UserDataService {
+    private final UserDataRepo userDataRepo;
+    private final UserRepo userRepo;
+
+    @Autowired
+    public UserDataServiceImpl(UserDataRepo userDataRepo, UserRepo userRepo) {
+        this.userDataRepo = userDataRepo;
+        this.userRepo = userRepo;
+    }
+
+    @Override
+    @Transactional
+    public String consumeUserData(KafkaProducerMsg userData) {
+        User user = userRepo.findByUserName(userData.getUser());
+        UserData userData1 = new UserData();
+        userData1.setUser(user);
+        userData1.setData(userData.getData());
+        userData1.setDevice(userData.getDevice());
+        userData1.setUserName(userData.getUser());
+        userData1.setStartTime(userData.getTimestamp());
+        userDataRepo.save(userData1);
+        Msg msg = new Msg(CommonConstant.SUCCESS_CODE,CommonConstant.CONSUME_DATA_SUCCESS);
+        return JSON.toJSONString(msg);
+    }
+}
