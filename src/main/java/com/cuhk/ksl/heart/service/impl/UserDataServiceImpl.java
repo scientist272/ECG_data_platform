@@ -24,15 +24,8 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public List<UserDataRecords> getUserData(String userName, String startTime, String device) {
-        List<UserData> data = userDataRepo.findByUserNameAndAndStartTimeAndAndDevice(userName, startTime, device);
-        List<UserDataRecords> result = new ArrayList<>();
-        data.forEach((userData) -> {
-            result.add(
-                    new UserDataRecords(userData.getData(),
-                            userData.getStartTime(),
-                            userData.getDevice()));
-        });
-        return result;
+        List<UserDataRecords> data = userDataRepo.findByUserNameAndAndStartTimeAndAndDevice(userName, startTime, device);
+        return data;
     }
 
     @Autowired

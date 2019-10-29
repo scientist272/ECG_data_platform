@@ -10,6 +10,7 @@ import com.cuhk.ksl.heart.entity.UserData;
 import com.cuhk.ksl.heart.service.UserService;
 import com.cuhk.ksl.heart.vo.Msg;
 import com.cuhk.ksl.heart.vo.RegisterRequest;
+import com.cuhk.ksl.heart.vo.UserDataRecords;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.junit.Test;
@@ -98,6 +99,10 @@ public class KslApplicationTests {
         System.out.println(userDataRepo.countUserDataByUserName("user"));
     }
 
-
+    @Test
+    public void testDataRepo(){
+        List<UserDataRecords> records = userDataRepo.findByUserNameAndAndStartTimeAndAndDevice("user","2019-10-10 19:56:46","heart");
+        System.out.println(JSON.toJSONString(records));
+    }
 }
 
