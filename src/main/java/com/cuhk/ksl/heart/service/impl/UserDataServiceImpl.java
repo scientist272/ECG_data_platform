@@ -9,14 +9,31 @@ import com.cuhk.ksl.heart.entity.UserData;
 import com.cuhk.ksl.heart.service.UserDataService;
 import com.cuhk.ksl.heart.vo.KafkaProducerMsg;
 import com.cuhk.ksl.heart.vo.Msg;
+import com.cuhk.ksl.heart.vo.UserDataRecords;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserDataServiceImpl implements UserDataService {
     private final UserDataRepo userDataRepo;
     private final UserRepo userRepo;
+
+    @Override
+    public List<UserDataRecords> getUserData(String userName, String startTime, String device) {
+        List<UserData> data = userDataRepo.findByUserNameAndAndStartTimeAndAndDevice(userName, startTime, device);
+        List<UserDataRecords> result = new ArrayList<>();
+        data.forEach((userData) -> {
+            result.add(
+                    new UserDataRecords(userData.getData(),
+                            userData.getStartTime(),
+                            userData.getDevice()));
+        });
+        return result;
+    }
 
     @Autowired
     public UserDataServiceImpl(UserDataRepo userDataRepo, UserRepo userRepo) {
@@ -35,7 +52,12 @@ public class UserDataServiceImpl implements UserDataService {
         userData1.setUserName(userData.getUser());
         userData1.setStartTime(userData.getTimestamp());
         userDataRepo.save(userData1);
-        Msg msg = new Msg(CommonConstant.SUCCESS_CODE,CommonConstant.CONSUME_DATA_SUCCESS);
+        Msg msg = new Msg(CommonConstant.SUCCESS_CODE, CommonConstant.CONSUME_DATA_SUCCESS);
         return JSON.toJSONString(msg);
+    }
+
+    @Override
+    public int getUserDataCount(String userName) {
+        return userDataRepo.countUserDataByUserName(userName);
     }
 }

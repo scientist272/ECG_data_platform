@@ -9,4 +9,5 @@ import java.util.List;
 public interface UserDataRepo extends JpaRepository<UserData,Integer> {
      List<UserData> findByUserName(String userName);
      Integer countUserDataByUserName(String userName);
+     List<UserData> findByUserNameAndAndStartTimeAndAndDevice(String userName,String startTime,String device);
 }

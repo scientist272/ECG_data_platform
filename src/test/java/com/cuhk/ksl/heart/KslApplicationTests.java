@@ -97,5 +97,7 @@ public class KslApplicationTests {
     public void testCount(){
         System.out.println(userDataRepo.countUserDataByUserName("user"));
     }
+
+
 }
 

@@ -24,17 +24,17 @@ public class UserController {
 
     //用于查看用户登录状态
     @GetMapping("/session")
-    public String getSessionInfo(HttpServletRequest request){
+    public UserSessionInfo getSessionInfo(HttpServletRequest request){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isLogin = false;
         if(!authentication.getName().equals("anonymousUser")){
             isLogin = true;
         }
-        return JSON.toJSONString(
+        return
                 new UserSessionInfo(
                         authentication.getName(),
                         JSON.toJSONString(authentication.getAuthorities()),
-                        isLogin,request.getRemoteAddr()));
+                        isLogin,request.getRemoteAddr());
     }
 
     @PostMapping("/register")

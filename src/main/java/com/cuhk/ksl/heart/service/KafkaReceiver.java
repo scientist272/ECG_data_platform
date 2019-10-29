@@ -18,7 +18,6 @@ import java.util.concurrent.Executors;
 @Slf4j
 public class KafkaReceiver {
     private final UserDataService userDataService;
-    private final ExecutorService threadPool = Executors.newFixedThreadPool(10);
 
     @Autowired
     public KafkaReceiver(UserDataService userDataService) {
@@ -33,11 +32,8 @@ public class KafkaReceiver {
         if(messageValue.isPresent()){
             log.info("----------success in getting message " +
                     "from kafka topic:{},with partitionId:{}-----------------",topic,partitionId);
-            //异步处理
-            threadPool.execute(()->{
                 KafkaProducerMsg data = JSON.parseObject(record,KafkaProducerMsg.class);
                 log.info("consume state:{}",userDataService.consumeUserData(data));//消费数据到数据库
-            });
 
         }else{
             log.info("---------Failure in getting message from kafka-------------");

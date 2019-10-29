@@ -22,27 +22,27 @@ public class CustomAuthFilter extends UsernamePasswordAuthenticationFilter {
             authenticationToken = new UsernamePasswordAuthenticationToken("", "");
             return this.getAuthenticationManager().authenticate(authenticationToken);
         }
-        if(request.getContentType()!=null){
-            if(request.getContentType().equals(MediaType.APPLICATION_JSON.toString())){
-                try (InputStream inputStream = request.getInputStream()) {
-                    LoginRequest loginRequest = JSON.parseObject(inputStream, LoginRequest.class);
-                    String userName = loginRequest.getUserName();
-                    String password = loginRequest.getPassword();
-                    authenticationToken = new UsernamePasswordAuthenticationToken(userName, password);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    authenticationToken = new UsernamePasswordAuthenticationToken("", "");
-                }
-                setDetails(request, authenticationToken);
-                return this.getAuthenticationManager().authenticate(authenticationToken);
-            }else{
+
+            //登录验证逻辑
+        if(request.getContentType()!=null && request.getContentType().equals(MediaType.APPLICATION_JSON.toString())){
+
+            try (InputStream inputStream = request.getInputStream()) {
+                LoginRequest loginRequest = JSON.parseObject(inputStream, LoginRequest.class);
+                String userName = loginRequest.getUserName();
+                String password = loginRequest.getPassword();
+                authenticationToken = new UsernamePasswordAuthenticationToken(userName, password);
+            } catch (IOException e) {
+                e.printStackTrace();
                 authenticationToken = new UsernamePasswordAuthenticationToken("", "");
             }
+            setDetails(request, authenticationToken);
         }else{
-            authenticationToken = new UsernamePasswordAuthenticationToken("", "");
-            return this.getAuthenticationManager().authenticate(authenticationToken);
+            String userName = request.getParameter("userName");
+            String password = request.getParameter("password");
+            authenticationToken = new UsernamePasswordAuthenticationToken(userName,password);
         }
-            return this.getAuthenticationManager().authenticate(authenticationToken);
+                return this.getAuthenticationManager().authenticate(authenticationToken);
+
         }
 
 

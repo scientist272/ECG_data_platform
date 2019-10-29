@@ -48,7 +48,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
-        http.formLogin();
+        http.formLogin().
+                and().
+                sessionManagement().
+                maximumSessions(1).
+                maxSessionsPreventsLogin(true);//不允许异地session存在
+
         http.exceptionHandling().
                 accessDeniedHandler(accessDeniedHandler).
                 authenticationEntryPoint(accessDeniedHandler);
