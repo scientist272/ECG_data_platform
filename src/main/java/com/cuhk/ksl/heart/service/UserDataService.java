@@ -15,4 +15,7 @@ public interface UserDataService {
 
     //删除几天前的用户数据
     int deleteUserDataDaysBefore(int day);
+
+    //根据用户名和应用名查找数据
+    List<UserDataRecords> getUserDataByDeviceAndUserName(String userName,String device);
 }

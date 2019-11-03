@@ -31,4 +31,10 @@ public class DataController {
                                                     @PathVariable("device") String device){
         return userDataService.getUserData(userName,startTime,device);
     }
+
+    @GetMapping("/{userName}/{device}")
+    public List<UserDataRecords> getUserDataRecordsByDeviceAndUserName(@PathVariable("userName") String userName,
+                                                                       @PathVariable("device") String device){
+        return userDataService.getUserDataByDeviceAndUserName(userName,device);
+    }
 }

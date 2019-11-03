@@ -35,6 +35,11 @@ public class UserDataServiceImpl implements UserDataService {
         return userDataRepo.deleteDatedUserData(DateUtil.getDaysBefore(day));
     }
 
+    @Override
+    public List<UserDataRecords> getUserDataByDeviceAndUserName(String userName, String device) {
+        return userDataRepo.findByUserNameAndDevice(userName,device);
+    }
+
     @Autowired
     public UserDataServiceImpl(UserDataRepo userDataRepo, UserRepo userRepo) {
         this.userDataRepo = userDataRepo;

@@ -10,4 +10,8 @@ public class UserDataRecords {
     private String data;
     private String startTime;
     private String device;
+    public UserDataRecords(String startTime,String device){
+        this.startTime = startTime;
+        this.device = device;
+    }
 }

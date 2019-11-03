@@ -1,8 +1,10 @@
 package com.cuhk.ksl.heart.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.cuhk.ksl.heart.entity.User;
 import com.cuhk.ksl.heart.service.UserService;
 import com.cuhk.ksl.heart.vo.RegisterRequest;
+import com.cuhk.ksl.heart.vo.UserRecords;
 import com.cuhk.ksl.heart.vo.UserSessionInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -10,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -40,5 +43,10 @@ public class UserController {
     @PostMapping("/register")
     public String register(@RequestBody RegisterRequest registerRequest){
         return userService.register(registerRequest);
+    }
+
+    @GetMapping("/list")
+    public List<UserRecords> userList(){
+        return userService.allUserList();
     }
 }

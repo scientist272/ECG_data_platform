@@ -1,0 +1,36 @@
+<script src="../../static/js/jquery-3.4.1.js"></script>
+<script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+<link href="../../static/bootstrap/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" type="text/css" href="../../static/css/login.css">
+
+
+<div class = "container">
+    <div class="wrapper">
+        <form id="form" onsubmit="return false" action="##"  class="form-signin">
+            <h3 class="form-signin-heading">Welcome Back! Please Sign In</h3>
+            <hr class="colorgraph"><br>
+
+            <input type="text" class="form-control" name="userName" placeholder="UserName" required="" autofocus="" />
+            <input type="password" class="form-control" name="password" placeholder="Password" required=""/>
+            <button id="Submit" onclick="login()" class="btn btn-lg btn-primary btn-block">Login</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function login() {
+        data =
+        $.ajax({
+            url: "/login",
+            data: $('#form').serialize(),
+            type: "POST",
+            success: function(data) {
+                if(data.code=="0"){
+                    window.location.href="./list";
+                }else{
+                    alert("用户名或密码错误")
+                }
+            }
+        });
+    }    
+</script>

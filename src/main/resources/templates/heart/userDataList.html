@@ -1,0 +1,56 @@
+
+<html>
+<head>
+    <script src="../../static/js/jquery-3.4.1.js"></script>
+    <script src="../../static/bootstrap/js/bootstrap.js"></script>
+    <link href="../../static/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <script src="../../static/bootstrap-table/bootstrap-table.js"></script>
+    <link href="../../static/bootstrap-table/bootstrap-table.css" rel="stylesheet">
+</head>
+<body><div class="container col-md-11">
+    <button id="back" onclick="goBack()" type="button" class="RoleOfA btn btn-default btn-sm">Go Back</button>
+    <table  id="table" align="center">
+    </table>
+</div>
+</body>
+</html>
+
+<script th:inline="javascript">
+    function goBack(){
+        window.location.href="../list";
+    }
+
+    window.operateEvents = {
+        'click .RoleOfA': function(field, value, row, index) {
+            alert(row.userName);
+        }
+    };
+
+    function operateFormatter(value, row, index) {
+        return [
+            '<button id="btn_detail" type="button" class="RoleOfA btn btn-default btn-sm">show</button>',
+        ].join('');
+    }
+    var userName =  [[${userName}]];
+    var url = '/data/'+userName+'/heart';
+    $('#table').bootstrapTable({
+        url: url,
+        pagination: true,
+        sortable: true,                     //是否启用排序
+        sortOrder: 'asc',                   //排序方式
+        pageSize: 5,                     //每页的记录行数（*）
+        showRefresh: true,                  //是否显示刷新按钮
+        search: true,
+        method: 'get',
+        columns: [{
+            formatter: userName,
+            title: 'user'
+        }, {
+            field: 'startTime',
+            title: 'startTime'
+        }, {
+            field: 'data',
+            title: 'data'
+        }]
+    })
+</script>

@@ -1,4 +1,7 @@
 spring:
+  thymeleaf:
+
+    cache: false
   kafka:
     bootstrap-servers: 129.211.88.168:9092
     producer:

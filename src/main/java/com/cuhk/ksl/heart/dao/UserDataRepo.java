@@ -28,4 +28,9 @@ public interface UserDataRepo extends JpaRepository<UserData, Integer> {
     @Query(value = "delete from UserData u where u.startTime<:timeAgo")
     int deleteDatedUserData(@Param("timeAgo") String timeAgo);
 
+    //通过用户名和应用来查看数据
+    @Query(value = "select new com.cuhk.ksl.heart.vo.UserDataRecords(u.startTime,u.device) " +
+            "from UserData u where userName = :userName and device = :device")
+    List<UserDataRecords> findByUserNameAndDevice(@Param("userName") String userName,@Param("device")String device);
+
 }
