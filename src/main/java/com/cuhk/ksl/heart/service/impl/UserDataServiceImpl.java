@@ -7,6 +7,7 @@ import com.cuhk.ksl.heart.dao.UserRepo;
 import com.cuhk.ksl.heart.entity.User;
 import com.cuhk.ksl.heart.entity.UserData;
 import com.cuhk.ksl.heart.service.UserDataService;
+import com.cuhk.ksl.heart.util.DateUtil;
 import com.cuhk.ksl.heart.vo.KafkaProducerMsg;
 import com.cuhk.ksl.heart.vo.Msg;
 import com.cuhk.ksl.heart.vo.UserDataRecords;
@@ -26,6 +27,12 @@ public class UserDataServiceImpl implements UserDataService {
     public List<UserDataRecords> getUserData(String userName, String startTime, String device) {
         List<UserDataRecords> data = userDataRepo.findByUserNameAndAndStartTimeAndAndDevice(userName, startTime, device);
         return data;
+    }
+
+    @Override
+    @Transactional
+    public int deleteUserDataDaysBefore(int day) {
+        return userDataRepo.deleteDatedUserData(DateUtil.getDaysBefore(day));
     }
 
     @Autowired
@@ -53,4 +60,6 @@ public class UserDataServiceImpl implements UserDataService {
     public int getUserDataCount(String userName) {
         return userDataRepo.countUserDataByUserName(userName);
     }
+
+
 }

@@ -8,6 +8,7 @@ import com.cuhk.ksl.heart.entity.Role;
 import com.cuhk.ksl.heart.entity.User;
 import com.cuhk.ksl.heart.entity.UserData;
 import com.cuhk.ksl.heart.service.UserService;
+import com.cuhk.ksl.heart.util.DateUtil;
 import com.cuhk.ksl.heart.vo.Msg;
 import com.cuhk.ksl.heart.vo.RegisterRequest;
 import com.cuhk.ksl.heart.vo.UserDataRecords;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -103,6 +105,17 @@ public class KslApplicationTests {
     public void testDataRepo(){
         List<UserDataRecords> records = userDataRepo.findByUserNameAndAndStartTimeAndAndDevice("user","2019-10-10 19:56:46","heart");
         System.out.println(JSON.toJSONString(records));
+    }
+
+    @Test
+    public void testDataUtil(){
+        String date = DateUtil.getDaysBefore(7);
+        System.out.println(date);
+    }
+    @Test
+    public void testDeleteData(){
+        int number = userDataRepo.deleteDatedUserData(DateUtil.getDaysBefore(3));
+        System.out.println(number);
     }
 }
 

@@ -12,4 +12,7 @@ public interface UserDataService {
     int getUserDataCount(String userName);
     //获取用户数据
     List<UserDataRecords> getUserData(String userName, String startTime, String device);
+
+    //删除几天前的用户数据
+    int deleteUserDataDaysBefore(int day);
 }
