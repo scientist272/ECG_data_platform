@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../static/js/jquery-3.4.1.js"></script>
+    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+    <link href="../../static/bootstrap/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="../../static/js/echarts.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container" align="center">
+    <div class="row">
+        <div class="col " align="right">
+            <button id="back" onclick="goBack()" type="button" class="RoleOfA btn btn-default btn-sm">Go Back</button>
+        </div>
+    </div>
+    <div id="main" style="width: 600px;height:400px;" align="center">
+    </div>
+</div>
+<script type="text/javascript" th:inline="javascript">
+    function goBack() {
+        window.history.back(-1);
+    }
+
+    var id = [[${id}]];
+    var url = "/data/pm/"+id;
+    $.ajax({
+        url: url,
+        type: "GET",
+        success: function (data) {
+            console.log(data);
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main'));
+            option = {
+                graphic: [
+                    {
+                        type: 'group',
+                        right: 200,
+                        top: 0,
+                        children: [
+                            {
+                                type: 'rect',
+                                z: 100,
+                                left: 'center',
+                                top: 'middle',
+                                shape: {
+                                    width: 190,
+                                    height: 90
+                                },
+                                style: {
+                                    fill: '#fff',
+                                    stroke: '#555',
+                                    lineWidth: 2,
+                                    shadowBlur: 8,
+                                    shadowOffsetX: 3,
+                                    shadowOffsetY: 3,
+                                    shadowColor: 'rgba(0,0,0,0.3)'
+                                }
+                            },
+                            {
+                                type: 'text',
+                                z: 100,
+                                left: 'center',
+                                top: 'middle',
+                                style: {
+                                    fill: '#333',
+                                    text: [
+                                        '_1p0: '+data._1p0,
+                                        '_2p5: '+data._2p5,
+                                        '_10p: '+data._10p,
+                                        'temperature: '+parseFloat(data.temperature).toFixed(2),
+                                        'humidity: ' +parseFloat(data.humidity).toFixed(2)
+                                    ].join('\n'),
+                                    font: '14px Microsoft YaHei'
+                                }
+                            }
+                        ]
+                    }
+                ],
+                title: {
+                    text: 'PM Data'
+                },
+                label: {
+                    show: true
+
+                },
+                xAxis: {
+                    data: data.rawData.length
+                },
+                yAxis: {},
+                series: [{
+                    type: 'line',
+                    data: data.rawData
+                }]
+            };
+            myChart.setOption(option);
+        }
+    });
+</script>
+</body>
+</html>

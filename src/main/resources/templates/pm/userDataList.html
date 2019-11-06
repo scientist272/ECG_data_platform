@@ -9,9 +9,6 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col" align="left">
-            <h2>Heart Data Overview</h2>
-        </div>
         <div class="col " align="right">
             <button id="back" onclick="goBack()" type="button" class="RoleOfA btn btn-default btn-sm">Go Back</button>
         </div>
@@ -32,18 +29,18 @@
 
     window.operateEvents = {
         'click .RoleOfA': function (field, value, row, index) {
-            window.location.href = "/heart/dataDetails/" + row.id;
+            window.location.href = "/pm/dataDetails/" + row.id;
         }
     };
 
     function operateFormatter(value, row, index) {
         return [
-            '<button id="btn_detail" type="button" class="RoleOfA btn btn-default btn-sm">show diagram</button>',
+            '<button id="btn_detail" type="button" class="RoleOfA btn btn-default btn-sm">show</button>',
         ].join('');
     }
 
     var userName = [[${userName}]];
-    var url = '/data/' + userName + '/heart';
+    var url = '/data/' + userName + '/PM';
     $('#table').bootstrapTable({
         url: url,
         pagination: true,
@@ -68,5 +65,6 @@
             formatter: operateFormatter,
             events: operateEvents
         }]
-    })
+    });
+
 </script>

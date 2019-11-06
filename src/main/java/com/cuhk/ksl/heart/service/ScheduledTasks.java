@@ -17,8 +17,8 @@ public class ScheduledTasks {
     }
 
     //清除几天前的过期数据
-    @Scheduled(initialDelay = 7*86400000,fixedRate = 7*86400000)
+    @Scheduled(initialDelay = 14*86400000,fixedRate = 14*86400000)
     public void deleteDatedUserData() {
-        log.info("delete user data before 1 day, totally deleted count:{} ", userDataService.deleteUserDataDaysBefore(7));
+        log.info("delete user data before 1 day, totally deleted count:{} ", userDataService.deleteUserDataDaysBefore(14));
     }
 }

@@ -9,11 +9,8 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col" align="left">
-            <h2>Heart Data Overview</h2>
-        </div>
         <div class="col " align="right">
-            <button id="back" onclick="goBack()" type="button" class="RoleOfA btn btn-default btn-sm">Go Back</button>
+            <button id="logout" onclick="logout()" type="button" class="RoleOfA btn btn-default btn-sm">log out</button>
         </div>
     </div>
     <div class="row">
@@ -21,31 +18,28 @@
         </table>
     </div>
 </div>
-
 </body>
 </html>
 
-<script th:inline="javascript">
-    function goBack() {
-        window.location.href = "../list";
+<script>
+    function logout() {
+        window.location.href = "/logout";
     }
 
     window.operateEvents = {
         'click .RoleOfA': function (field, value, row, index) {
-            window.location.href = "/heart/dataDetails/" + row.id;
+            window.location.href = "./dataList/" + row.userName;
         }
     };
 
     function operateFormatter(value, row, index) {
         return [
-            '<button id="btn_detail" type="button" class="RoleOfA btn btn-default btn-sm">show diagram</button>',
+            '<button id="btn_detail" type="button" class="RoleOfA btn btn-default btn-sm">show</button>',
         ].join('');
     }
 
-    var userName = [[${userName}]];
-    var url = '/data/' + userName + '/heart';
     $('#table').bootstrapTable({
-        url: url,
+        url: '/user/list',
         pagination: true,
         sortable: true,                     //是否启用排序
         sortOrder: 'asc',                   //排序方式
@@ -54,14 +48,11 @@
         search: true,
         method: 'get',
         columns: [{
-            field:'id',
-            title:'ID'
+            field: 'id',
+            title: 'ID'
         }, {
-            formatter: userName,
-            title: 'user'
-        }, {
-            field: 'startTime',
-            title: 'startTime'
+            field: 'userName',
+            title: 'NAME'
         }, {
             field: 'data',
             title: 'data',

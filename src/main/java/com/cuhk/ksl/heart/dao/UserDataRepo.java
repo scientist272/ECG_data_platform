@@ -15,13 +15,19 @@ public interface UserDataRepo extends JpaRepository<UserData, Integer> {
 
     Integer countUserDataByUserName(String userName);
 
-    @Query(value = "select new com.cuhk.ksl.heart.vo.UserDataRecords(u.data,u.startTime,u.device) " +
+    //要返回data,给客户端调用
+    @Query(value = "select new com.cuhk.ksl.heart.vo.UserDataRecords(u.id,u.data,u.startTime,u.device) " +
             "from UserData u where userName = :userName and startTime = :startTime and device = :device")
     List<UserDataRecords> findByUserNameAndAndStartTimeAndAndDevice(@Param("userName")
                                                                             String userName,
                                                                     @Param("startTime") String startTime,
 
                                                                     @Param("device") String device);
+    //给网页端调用，返回一条数据
+    @Query("select new com.cuhk.ksl.heart.vo.UserDataRecords(u.id,u.data,u.startTime,u.device) " +
+            "from UserData u where id = :id")
+    UserDataRecords findUserDataRecordById(@Param("id") Integer id);
+
 
     //删除过期的数据
     @Modifying
@@ -29,7 +35,7 @@ public interface UserDataRepo extends JpaRepository<UserData, Integer> {
     int deleteDatedUserData(@Param("timeAgo") String timeAgo);
 
     //通过用户名和应用来查看数据
-    @Query(value = "select new com.cuhk.ksl.heart.vo.UserDataRecords(u.startTime,u.device) " +
+    @Query(value = "select new com.cuhk.ksl.heart.vo.UserDataRecords(u.id,u.startTime,u.device) " +
             "from UserData u where userName = :userName and device = :device")
     List<UserDataRecords> findByUserNameAndDevice(@Param("userName") String userName,@Param("device")String device);
 

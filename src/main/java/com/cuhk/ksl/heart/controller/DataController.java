@@ -1,6 +1,7 @@
 package com.cuhk.ksl.heart.controller;
 
 import com.cuhk.ksl.heart.service.UserDataService;
+import com.cuhk.ksl.heart.vo.pm.PMAirRecords;
 import com.cuhk.ksl.heart.vo.UserDataRecords;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,20 +22,30 @@ public class DataController {
     }
 
     @GetMapping("/count/{userName}")
-    public String getUserDataCount(@PathVariable("userName") String userName){
-        return ("{"+"\""+"count"+"\""+":"+String.valueOf(userDataService.getUserDataCount(userName))+"}");
+    public String getUserDataCount(@PathVariable("userName") String userName) {
+        return ("{" + "\"" + "count" + "\"" + ":" + String.valueOf(userDataService.getUserDataCount(userName)) + "}");
     }
 
     @GetMapping("/{userName}/{startTime}/{device}")
     public List<UserDataRecords> getUserDataRecords(@PathVariable("userName") String userName,
                                                     @PathVariable("startTime") String startTime,
-                                                    @PathVariable("device") String device){
-        return userDataService.getUserData(userName,startTime,device);
+                                                    @PathVariable("device") String device) {
+        return userDataService.getUserData(userName, startTime, device);
     }
 
     @GetMapping("/{userName}/{device}")
     public List<UserDataRecords> getUserDataRecordsByDeviceAndUserName(@PathVariable("userName") String userName,
-                                                                       @PathVariable("device") String device){
-        return userDataService.getUserDataByDeviceAndUserName(userName,device);
+                                                                       @PathVariable("device") String device) {
+        return userDataService.getUserDataByDeviceAndUserName(userName, device);
+    }
+
+    @GetMapping("/heart/{id}")
+    public List<Integer> getHeartData(@PathVariable("id") int id) {
+        return userDataService.generateHeartData(id);
+    }
+
+    @GetMapping("/pm/{id}")
+    public PMAirRecords getPMData(@PathVariable("id") int id){
+        return userDataService.generatePMData(id);
     }
 }

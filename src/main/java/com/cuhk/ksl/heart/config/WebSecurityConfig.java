@@ -45,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/heart/**").hasAnyAuthority("BASIC")
+                .antMatchers("/pm/**").hasAnyAuthority("BASIC")
                 .antMatchers("/test/entity").hasAuthority("BASIC");
 
 
@@ -66,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         //解决静态资源被拦截的问题
-        web.ignoring().antMatchers("/static/**").antMatchers("/heart/login");
+        web.ignoring().antMatchers("/static/**").antMatchers("/heart/login").antMatchers("/pm/login");
     }
 
 

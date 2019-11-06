@@ -7,6 +7,7 @@ import com.cuhk.ksl.heart.dao.UserRepo;
 import com.cuhk.ksl.heart.entity.Role;
 import com.cuhk.ksl.heart.entity.User;
 import com.cuhk.ksl.heart.entity.UserData;
+import com.cuhk.ksl.heart.service.UserDataService;
 import com.cuhk.ksl.heart.service.UserService;
 import com.cuhk.ksl.heart.util.DateUtil;
 import com.cuhk.ksl.heart.vo.Msg;
@@ -39,6 +40,8 @@ public class KslApplicationTests {
     private UserDataRepo userDataRepo;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserDataService userDataService;
 
     @Test
     public void contextLoads() {
@@ -116,6 +119,12 @@ public class KslApplicationTests {
     public void testDeleteData(){
         int number = userDataRepo.deleteDatedUserData(DateUtil.getDaysBefore(3));
         System.out.println(number);
+    }
+
+    @Test
+    public void testGenWeatherData(){
+        List<Integer> heartData = userDataService.generateHeartData(39);
+        heartData.stream().forEach(System.out::println);
     }
 }
 
