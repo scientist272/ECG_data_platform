@@ -1,6 +1,5 @@
 spring:
   thymeleaf:
-
     cache: false
   kafka:
     bootstrap-servers: 129.211.88.168:9092
@@ -9,7 +8,7 @@ spring:
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
       auto-offset-reset: earliest
-      group-id: ksl
+      group-id: ksl-1
       enable-auto-commit: true
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer

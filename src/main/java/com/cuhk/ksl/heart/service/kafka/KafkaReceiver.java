@@ -1,6 +1,7 @@
-package com.cuhk.ksl.heart.service;
+package com.cuhk.ksl.heart.service.kafka;
 
 import com.alibaba.fastjson.JSON;
+import com.cuhk.ksl.heart.service.UserDataService;
 import com.cuhk.ksl.heart.vo.KafkaProducerMsg;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class KafkaReceiver {
         this.userDataService = userDataService;
     }
 
-    @KafkaListener(topics = {"cluster-test"})
+    @KafkaListener(topics = {"ksl"})
     public void listen(@Payload String record,
                        @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
                        @Header(KafkaHeaders.RECEIVED_PARTITION_ID) String partitionId){
