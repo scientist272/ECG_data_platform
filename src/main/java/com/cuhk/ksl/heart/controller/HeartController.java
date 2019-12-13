@@ -28,11 +28,12 @@ public class HeartController {
         return "heart/userDataList";
     }
 
-    @GetMapping("/dataDetails/{id}")
-    public String dataDetails(@PathVariable("id") int id, Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    @GetMapping("/dataDetails/{userName}/{id}")
+    public String dataDetails(@PathVariable("id") int id,
+                              @PathVariable("userName") String userName,
+                              Model model) {
         model.addAttribute("id", id);
-        model.addAttribute("userName", authentication.getName());
+        model.addAttribute("userName", userName);
         return "heart/dataDiagram";
     }
 }

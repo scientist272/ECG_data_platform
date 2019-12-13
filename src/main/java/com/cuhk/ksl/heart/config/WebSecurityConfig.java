@@ -44,8 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         http.authorizeRequests()
-                .antMatchers("/heart/**").hasAnyAuthority("BASIC")
-                .antMatchers("/pm/**").hasAnyAuthority("BASIC")
+                .antMatchers("/heart/**").hasAuthority("DOCTOR")
+                .antMatchers("/pm/**").hasAuthority("WEATHER")
                 .antMatchers("/test/entity").hasAuthority("BASIC");
 
 
