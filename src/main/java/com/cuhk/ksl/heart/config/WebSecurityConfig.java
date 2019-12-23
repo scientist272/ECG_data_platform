@@ -43,12 +43,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
 
-        http.authorizeRequests()
+        http.authorizeRequests().antMatchers("/message/**").hasAnyAuthority("DOCTOR","WEATHER","BASIC")
+                .antMatchers("/data/**").hasAnyAuthority("DOCTOR","WEATHER","BASIC")
                 .antMatchers("/heart/**").hasAuthority("DOCTOR")
-                .antMatchers("/pm/**").hasAuthority("WEATHER")
-                .antMatchers("/test/entity").hasAuthority("BASIC");
-
-
+                .antMatchers("/pm/**").hasAuthority("WEATHER");
 
         http.formLogin().
                 and().
