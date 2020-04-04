@@ -27,6 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailServiceImpl userDetailService;
     private final CustomLogOutHandler customLogOutHandler;
     private final CustomAccessDeniedHandler accessDeniedHandler;
+
     @Autowired
     public WebSecurityConfig(UserDetailServiceImpl userDetailService, CustomAuthHandler customAuthHandler, CustomLogOutHandler customLogOutHandler, CustomAccessDeniedHandler accessDeniedHandler) {
         this.userDetailService = userDetailService;
@@ -39,12 +40,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
 
-        http.authorizeRequests().antMatchers("/message/**").hasAnyAuthority("DOCTOR","WEATHER","BASIC")
-                .antMatchers("/data/**").hasAnyAuthority("DOCTOR","WEATHER","BASIC")
+        http.authorizeRequests()
+                .antMatchers("/data/**").hasAnyAuthority("DOCTOR", "WEATHER", "BASIC")
                 .antMatchers("/heart/**").hasAuthority("DOCTOR")
                 .antMatchers("/pm/**").hasAuthority("WEATHER");
 
@@ -62,6 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterAt(customAuthFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         //解决静态资源被拦截的问题
