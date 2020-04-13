@@ -1,12 +1,15 @@
 package com.cuhk.ksl.heart;
 
 import com.alibaba.fastjson.JSON;
+import com.cuhk.ksl.heart.dao.MessageDao;
 import com.cuhk.ksl.heart.dao.RoleRepo;
 import com.cuhk.ksl.heart.dao.UserDataRepo;
 import com.cuhk.ksl.heart.dao.UserRepo;
+import com.cuhk.ksl.heart.entity.Message;
 import com.cuhk.ksl.heart.entity.Role;
 import com.cuhk.ksl.heart.entity.User;
 import com.cuhk.ksl.heart.entity.UserData;
+import com.cuhk.ksl.heart.service.MessageService;
 import com.cuhk.ksl.heart.service.UserDataService;
 import com.cuhk.ksl.heart.service.UserService;
 import com.cuhk.ksl.heart.util.DateUtil;
@@ -42,7 +45,10 @@ public class KslApplicationTests {
     private UserService userService;
     @Autowired
     private UserDataService userDataService;
-
+    @Autowired
+    private MessageDao messageDao;
+    @Autowired
+    private MessageService messageService;
     @Test
     public void contextLoads() {
         String userName = "user";
@@ -125,6 +131,30 @@ public class KslApplicationTests {
     public void testGenWeatherData(){
         List<Integer> heartData = userDataService.generateHeartData(39);
         heartData.stream().forEach(System.out::println);
+    }
+
+    @Test
+    @Transactional
+    public void testSaveMessage(){
+        Message message = new Message();
+        message.setContent("test");
+        message.setReceiver("test");
+        message.setSender("test");
+        message.setTitle("test");
+        message.setUser(userRepo.findById(1).get());
+        message = messageDao.save(message);
+        System.out.println(message.getId());
+    }
+
+    @Test
+    public void testSendMessage(){
+        Message message = new Message();
+        message.setContent("test");
+        message.setReceiver("test");
+        message.setSender("test");
+        message.setTitle("test");
+        message.setSender("user");
+        System.out.println(JSON.toJSONString(messageService.sendMessage(message,"ksl-msg")));
     }
 }
 

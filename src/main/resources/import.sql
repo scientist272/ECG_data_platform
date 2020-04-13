@@ -1,5 +1,17 @@
 -- insert into users(id,user_name,password) values (1,'user','$2a$10$rjFU3hAIf1tw/KiVnAOQDeZmWXvmLT2B6TaFtXpFKk4PtU1b0NIeC');
 -- insert into roles select 1,'BASIC';
 -- insert into roles select 2,'ADMIN';
+-- insert into roles select 3,'DOCTOR';
+-- insert into roles select 4,'WEATHER';
 -- insert into users_roles select 1,1;
 -- insert into users_roles select 1,2;
+-- insert into users_roles select 1,3;
+-- insert into users_roles select 1,4;
+-- insert into users(id,user_name,password) values (2,'doctor','$2a$10$rjFU3hAIf1tw/KiVnAOQDeZmWXvmLT2B6TaFtXpFKk4PtU1b0NIeC');
+-- insert into users_roles select 2,1;
+-- insert into users_roles select 2,2;
+-- insert into users_roles select 2,3;
+-- insert into users(id,user_name,password) values (3,'weather','$2a$10$rjFU3hAIf1tw/KiVnAOQDeZmWXvmLT2B6TaFtXpFKk4PtU1b0NIeC');
+-- insert into users_roles select 3,1;
+-- insert into users_roles select 3,2;
+-- insert into users_roles select 3,4;

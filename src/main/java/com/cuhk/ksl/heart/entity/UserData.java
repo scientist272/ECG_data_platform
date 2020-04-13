@@ -1,5 +1,6 @@
 package com.cuhk.ksl.heart.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class UserData {
     @Column(name = "data",columnDefinition = "MEDIUMTEXT")
     private String data;
 
+    @JSONField(serialize = false,deserialize = false)
     @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.REFRESH,CascadeType.MERGE},optional = false)
     private User user;
 }

@@ -1,10 +1,9 @@
 package com.cuhk.ksl.heart.controller;
 
-import com.cuhk.ksl.heart.constant.CommonConstant;
+import com.cuhk.ksl.heart.entity.Message;
+import com.cuhk.ksl.heart.service.MessageService;
 import com.cuhk.ksl.heart.service.kafka.KafkaSender;
-import com.cuhk.ksl.heart.util.DateUtil;
 import com.cuhk.ksl.heart.vo.Msg;
-import com.cuhk.ksl.heart.vo.heartMsg.HeartMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,16 +12,17 @@ import org.springframework.web.bind.annotation.*;
 public class MessageController {
 
     private final KafkaSender kafkaSender;
+    private final MessageService messageService;
 
     @Autowired
-    public MessageController(KafkaSender kafkaSender) {
+    public MessageController(KafkaSender kafkaSender, MessageService messageService) {
         this.kafkaSender = kafkaSender;
+        this.messageService = messageService;
     }
 
     @PostMapping("/send/{topic}")
-    public Msg sendHeartMessage(@RequestBody HeartMsg heartMsg, @PathVariable String topic) {
-        heartMsg.setRecordBase(DateUtil.generalSimpleDateFormat());
-        kafkaSender.send(heartMsg,topic);
-        return new Msg(CommonConstant.SUCCESS_CODE,CommonConstant.SEND_HEART_MESSAGE_SUCCESS);
+    public Msg sendHeartMessage(@RequestBody Message message, @PathVariable String topic) {
+
+        return messageService.sendMessage(message,topic);
     }
 }

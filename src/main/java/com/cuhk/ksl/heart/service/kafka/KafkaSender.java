@@ -1,7 +1,7 @@
 package com.cuhk.ksl.heart.service.kafka;
 
 import com.alibaba.fastjson.JSON;
-import com.cuhk.ksl.heart.vo.heartMsg.HeartMsg;
+import com.cuhk.ksl.heart.entity.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -21,7 +21,7 @@ public class KafkaSender {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void send(HeartMsg msg, String topic) {
+    public void send(Message msg, String topic) {
         String message = JSON.toJSONString(msg);
         ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, message);
         future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
