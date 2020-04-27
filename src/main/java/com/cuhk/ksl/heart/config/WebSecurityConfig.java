@@ -6,6 +6,7 @@ import com.cuhk.ksl.heart.security.CustomAuthHandler;
 import com.cuhk.ksl.heart.security.CustomLogOutHandler;
 import com.cuhk.ksl.heart.service.impl.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableEurekaClient
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomAuthHandler customAuthHandler;
     private final UserDetailServiceImpl userDetailService;

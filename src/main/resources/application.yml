@@ -14,7 +14,7 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
   application:
-    name: Ksl
+    name: ksl-user
 
   datasource:
     url: jdbc:mysql://106.54.62.64:3306/ksl?autoReconnect=true&serverTimezone=GMT
@@ -27,10 +27,13 @@ spring:
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 
-
 server:
   port: 8080
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://ec2-54-87-165-29.compute-1.amazonaws.com:7001/eureka/
 #logging:
 #  level:
 #    root: error
