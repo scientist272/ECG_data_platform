@@ -156,5 +156,11 @@ public class KslApplicationTests {
         message.setSender("user");
         System.out.println(JSON.toJSONString(messageService.sendMessage(message,"ksl-msg")));
     }
+
+    @Test
+    public void testGetMessage(){
+        List<Message> messages = messageDao.getBySenderAndReceiverAndIsReceivedIsTrue("user","doctor");
+        System.out.println(JSON.toJSONString(messages));
+    }
 }
 

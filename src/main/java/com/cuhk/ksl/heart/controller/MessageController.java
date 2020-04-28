@@ -22,7 +22,6 @@ public class MessageController {
 
     @PostMapping("/send/{topic}")
     public Msg sendHeartMessage(@RequestBody Message message, @PathVariable String topic) {
-
         return messageService.sendMessage(message,topic);
     }
 }
